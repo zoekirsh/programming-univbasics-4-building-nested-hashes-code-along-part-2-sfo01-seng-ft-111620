@@ -1,288 +1,37 @@
-# Building Nested Hashes Code Along
+# Accessing Nested Hashes Code Along
 
 ## Learning Goals
 
-- Build a nested hash.
 - Access and manipulate data in nested hashes.
 
-## Code Along Challenge: Epic Tragedy
+## Epic Tragedy Returned
 
-You're 16 years old and back in high school English class. Luckily for us, our
-teacher is kind of lazy and we get to watch the _Romeo and Juliet_ movie from
-the '90s starring Leonardo DiCaprio and Claire Danes.
-
-![](http://readme-pics.s3.amazonaws.com/RomeoandJuliet5.jpg)
-
-But there's a Romeo and Juliet quiz our teacher has scheduled for us that we
-need to get ready for. We will definitely be required to answer some questions
-on the cast of characters and their attributes and relationships to one another.
-Let's map out that information:
-
-![Montague/Capulet Family Tree](https://curriculum-content.s3.amazonaws.com/programming-univbasics-4/nested-hashes/Image_7_NestedHash.png)
-
-What we have here is a nested data structure. There are different levels or
-tiers of information. On the top tier, we have family names. Beneath that we
-have key characters, and beneath that we have their attributes. We have an
-additional layer of the hero/heroine's friends because there are multiple
-friends. Now that we have a sense of the structure that our collection of
-information is taking, we're going to build a nested hash that displays it in
-the same nested way. Our end result will look like this:
-
-```ruby
-epic_tragedy = {
-  :montague => {
-    :patriarch => {
-      :name => "Lord Montague",
-      :age => "53"
-  },
-    :matriarch => {
-      :name => "Lady Montague",
-      :age => "54"
-  },
-    :hero => {
-      :name => "Romeo",
-      :age => "15"
-  },
-    :hero_friends => [
-      {
-         :name => "Benvolio",
-         :age => "17",
-         :attitude => "worried"
-      },
-      {
-        :name => "Mercutio",
-        :age => "18",
-        :attitude => "hot-headed"
-      }
-    ]
-  },
-  :capulet => {
-    :patriarch => {
-      :name => "Lord Capulet",
-      :age => "50"
-    },
-    :matriarch => {
-      :name => "Lady Capulet",
-      :age => "51"
-    },
-    :heroine => {
-      :name => "Juliet",
-      :age => "15",
-      :status => "alive"
-    },
-    :heroine_friends=> [
-      {
-        :name => "Steven",
-        :age => "30",
-        :attitude => "confused"
-      },
-      {
-        :name => "Nurse",
-        :age => "44",
-        :attitude => "worried"
-      }
-    ]
-  }
-}
-```
-
-> **Note:** You might notice that we are storing ages as strings. That is
-> because the ages here are not numbers that we need to frequently do math with.
-> If a hash value was a number that we needed to manipulate, then we would store
-> it as an integer. For example, if it was the price of an item that we need to
-> calculate the tax on, then the price would be stored as an integer or float.
-> Otherwise, it is conventional to store information like a person's age as a
-> string.
-
-Remember that the `key: value` syntax is the same as the `:key => value` syntax
-used above. Get ready to see them both used in different applications and
-sources.
+We are going to continue with our previous example of Shakespearean works. This
+time, we will spare you the literature lesson - the nested hashes of characters
+are provided this time. Your task will be to access and modify those hashes.
 
 ## Instructions
 
-This is a complicated data structure, so we're going to build it up one step at
-a time. Follow along with the walk-through below.
+## Manipulating A Hash
 
-### Code Along Challenge I: Family Names
-
-In `lib/first_challenge.rb`, you're going to fill out the content of the
-`epic_tragedy` hash. The first level of our nested hash are the keys for the
-family names, "Montague" and "Capulet". We've made them symbols above, because
-symbols make better hash keys than strings.
-
-- Set the `epic_tragedy` variable equal to a hash with two key/value pairs. The
-  keys should be symbols of the family names (`:montague` and `:capulet`) and the
-  values should be empty hashes.
-
-At this point, we have a hash that looks like this:
+In previous lessons, we learned that you can access a value in a hash like
+this:
 
 ```ruby
-epic_tragedy = {
-  :montague => {},
-  :capulet => {}
-}
+hash = {first: "first value!", second: "second value!"}
+
+hash[:first]
+#  => "first value!"
 ```
 
-Now it's time to fill out the second level of our hash — the collection of data
-that constitutes the value hashes of each family name key.
+To access the values in a nested hash, we simply tack on additional keys,
+until we have the last key that points to the value we want to access.
 
-### Code Along Challenge II: Character Roles
+For example, if we had the following hash:
 
-In `lib/second_challenge.rb`, you'll find the hash you built in the previous
-challenge.
-
-Fill out the empty hash that is the value of the `:montague` key. There are four
-keys in this hash:
-
-- `:patriarch`
-- `:matriarch`
-- `:hero`
-- `:hero_friends`
-
-The first three of these keys point to the value of an empty hash. The fourth key
-`:hero_friends` has the value of an empty array.
-
-Then, do the same for the empty hash that is the value of the `:capulet` key.
-This time, your keys are:
-
-- `:patriarch`
-- `:matriarch`
-- `:heroine`
-- `:heroine_friends`
-
-The values are the same as described above. Once you get this test passing, you
-should have a hash that looks like this:
-
-```ruby
+```rb
 epic_tragedy = {
-   :montague => {
-      :patriarch => {},
-      :matriarch => {},
-      :hero => {},
-      :hero_friends => []
-   },
-   :capulet => {
-      :patriarch => {},
-      :matriarch => {},
-      :heroine => {},
-      :heroine_friends => []
-   }
-}
-```
-
-Now we're ready to fill out the empty hashes that constitute the values for the
-`:patriarch`, `:matriarch` and `:hero`/`:heroine` keys, nested inside the family
-name keys of our epic `epic_tragedy hash`.
-
-### Code Along Challenge III: Character Attributes
-
-According to the diagram that we saw at the very beginning of this exercise,
-each character has a set of attributes. Matriarch and Patriarchs have a name and
-an age. The hero and heroine each have a name, age and status.
-
-In `lib/third_challenge`, you'll find the hash that you built in the previous
-challenge. Fill out the empty hashes that are the values of the `:patriarch`,
-`:matriarch`, and `:hero`/`:heroine` keys with the following key/value pairs.
-
-- The Montague `:patriarch` has
-  - a `:name` of "Lord Montague" and
-  - an `:age` of "53".
-- The Montague `:matriarch` has
-  - a `:name` of "Lady Montague" and
-  - an `:age` of "54".
-- The Montague `:hero` has
-  - a `:name` of "Romeo",
-  - an `:age` of "15", and
-  - a `:status` of "alive".
-- The Capulet `:patriarch` has
-  - a `:name` of "Lord Capulet" and
-  - an `:age` of "50".
-- The Capulet `:matriarch` has
-  - a `:name` of "Lady Capulet" and
-  - an `:age` of "51".
-- The Capulet `:heroine` has
-  - a `:name` of "Juliet",
-  - an `:age` of "15", and
-  - a `:status` of "alive".
-
-Once you get this test passing, you should have the following hash:
-
-```ruby
-epic_tragedy = {
-   :montague => {
-      :patriarch => {name: "Lord Montague", age: "53"},
-      :matriarch => {name: "Lady Montague", age: "54"},
-      :hero => {name: "Romeo", age: "15", status: "alive"},
-      :hero_friends => []
-   },
-   :capulet => {
-      :patriarch => {name: "Lord Capulet", age: "50"},
-      :matriarch => {name: "Lady Capulet", age: "51"},
-      :heroine => {name: "Juliet", age: "15", status: "alive"},
-      :heroine_friends => []
-   }
-}
-```
-
-We're almost done. Our hero and heroine have two friends each. That constitutes
-a collection of friends. Since they each have a collection of friends, it makes
-sense to collect those friends in an array. Since each friend will have his or
-her own attributes (name, age, etc), our array will be _an array of hashes_!
-
-### Code Along Challenge IV: Nesting Friends and Attributes
-
-The values of the `:hero_friends` and `:heroine_friends` keys currently point to
-empty arrays. Why arrays? Well, we know that an individual person can be
-represented by a hash. However, our hero and heroine have multiple friends. So,
-we need a way to store their friends in list-form. Luckily for us, that's just
-what arrays are for.
-
-Fill out these empty arrays with a series of hashes that will contain key/value
-pairs describing these friends.
-
-The hero's two friends are Benvolio and Mercutio. So, the `:hero_friends` array
-will contain two hashes. Each of these two hashes has the following three keys:
-
-- `:name`
-- `:age`
-- `:attitude`
-
-The hero's first friend has
-
-- a name of "Benvolio",
-- an age of "17", and
-- an attitude of "worried".
-
-The hero's second friend has
-
-- a name of "Mercutio",
-- an age of "18", and
-- an attitude of "hot-headed".
-
-The heroine's two friends are Steven and Nurse. So, the `:heroine_friends` array
-will contain two hashes. Each of these two hashes has the following three keys:
-
-- `:name`
-- `:age`
-- `:attitude`
-
-The heroine's first friend has
-
-- a name of "Steven",
-- an age of "30", and
-- an attitude of "confused".
-
-The heroine's second friend has
-
-- a name of "Nurse",
-- an age of "44", and
-- an attitude of "worried".
-
-Once you get this test passing, your hash should look like this:
-
-```ruby
-epic_tragedy = {
-   :montague => {
+  :montague => {
       :patriarch => {name: "Lord Montague", age: "53"},
       :matriarch => {name: "Lady Montague", age: "54"},
       :hero => {name: "Romeo", age: "15", status: "alive"},
@@ -296,31 +45,16 @@ epic_tragedy = {
       :matriarch => {name: "Lady Capulet", age: "51"},
       :heroine => {name: "Juliet", age: "15", status: "alive"},
       :heroine_friends => [
-          {name: "Steven", age: "30", attitude: "confused"},
-          {name: "Nurse", age: "44", attitude: "worried"}
+        {name: "Steven", age: "30", attitude: "confused"},
+        {name: "Nurse", age: "44", attitude: "worried"}
       ]
    }
 }
 ```
 
-## Bonus: Manipulating the Hash
-
-In the previous lesson we learned that you can access a value in a hash like
-this:
-
-```ruby
-hash = {first: "first value!", second: "second value!"}
-
-hash[:first]
-#  => "first value!"
-```
-
-To access the values in our nested hash, we simply tack on additional keys,
-until we have the last key that points to the value we want to access.
-
-For example, to access the Montague patriarch's name, I use the hash name,
-`epic_tragedy`, followed by a chained list of all of the key names that precede
-the value of his name, enclosed in brackets:
+To access the Montague patriarch's name, we use the hash name, `epic_tragedy`,
+followed by a chained list of all of the key names that precede the value of his
+name, enclosed in brackets:
 
 ```ruby
 epic_tragedy[:montague][:patriarch][:name]
@@ -361,15 +95,61 @@ puts epic_tragedy
 
 ![Montague/Capulet Family Tree w/ Michael Jordan](https://curriculum-content.s3.amazonaws.com/programming-univbasics-4/nested-hashes/Image_8_NestedHash.png)
 
-### Bonus Code Along Challenge
+## Arrays in Hashes
 
-In `lib/bonus.rb` you'll see our completed `epic_tragedy hash`. We're coming to
-the end of the epic tragedy of Romeo and Juliet. At this point in the story,
-Romeo and Juliet are — as in every good tragedy — quite dead. Use the above
-method to change the status of our hero Romeo and our heroine Juliet from
-"alive" to "dead". These are a bonus and if you're feeling comfortable with
-Hashes, feel free to move forward. Also, to enable these tests, make sure to
-remove the `x` in front of the `it` block in spec/bonus_spec.rb.
+In the `epic_tragedy` hash, both the `:montague` and `:capulet` nested hashes
+contain arrays, `:hero_friends` and `heroine_friends`. Similar to how we chain
+multiple keys in brackets to access nested hashes, we can also chain brackets
+with integers for nested arrays. For instance, if we wanted to access the hash
+containing Mercutio's information, we would need to access the second element in
+the `:hero_friends` array:
+
+```ruby
+epic_tragedy[:montague][:hero_friends][1]
+#  => {:name=>"Mercutio", :age=>"18", :attitude=>"hot-headed"}
+```
+
+And if we wanted to go further, we can continue to chain brackets:
+
+```ruby
+epic_tragedy[:montague][:hero_friends][1][:name]
+#  => "Mercutio"
+```
+
+### Challenge
+
+In `lib/updating_nested_hashes.rb`, your task is to finish two methods,
+`update_status` and `add_characters`. In each, a hash is provided that need to
+be modified. Rather than directly change the hash, try to write a programmatic
+solution for modifying the hash content.
+
+## `update_status`
+
+For the `update_status` method,  you'll see an `epic_tragedy` hash is provided.
+We've come to the end of the epic tragedy of Romeo and Juliet. At this point in
+the story, Romeo and Juliet are — as in every good tragedy — quite dead.
+
+Add code to the `update_status` method to change the status of our hero Romeo
+and our heroine Juliet from "alive" to "dead".
+
+## `fix_roles`
+
+In the second method for this lab, `add_characters`, we are starting again with
+an `epic_tragedy` hash. This time your task is to add some nested content into
+the hash. We want to shout out some of the important characters from the play
+that aren't a part of either family. Alongside `:montague` and `:capulet`, add a
+third key to `epic_tragedy`, `:additional_characters`. This key should point to
+an array.
+
+Inside this array, add **two hashes**. Each hash should contain a single key,
+`:name`. 
+
+- For the first hash, assign `"Prince Escalus"` as the `:name`
+- For the  second  hash, assign `"Apothecary"`
+
+Run `learn` to track your progress and `learn submit` when you've finished your
+work. A walkthrough is provided below, but try to first solve these as best you
+can.
 
 ## Conclusion
 
@@ -379,3 +159,142 @@ access data from anywhere on the hash, no matter how deeply nested the data is.
 
 Good night, good night! parting is such sweet sorrow, That I shall say good
 night till it be morrow.
+
+## Solving this Lab
+
+### `update_status`
+
+For `update_status`,  we're given the following array:
+
+```rb
+epic_tragedy = {
+  :montague => {
+      :patriarch => {name: "Lord Montague", age: "53"},
+      :matriarch => {name: "Lady Montague", age: "54"},
+      :hero => {name: "Romeo", age: "15", status: "alive"},
+      :hero_friends => [
+        {name: "Benvolio", age: "17", attitude: "worried"},
+        {name: "Mercutio", age: "18", attitude: "hot-headed"}
+      ]
+  },
+  :capulet => {
+      :patriarch => {name: "Lord Capulet", age: "50"},
+      :matriarch => {name: "Lady Capulet", age: "51"},
+      :heroine => {name: "Juliet", age: "15", status: "alive"},
+      :heroine_friends => [
+      {name: "Steven", age: "30", attitude: "confused"},
+      {name: "Nurse", age: "44", attitude: "worried"}
+      ]
+  }
+}
+```
+
+We  need to change the `:status` of Romeo and Juliet to `"dead"`. The first step
+would be to find a way to _access_ status.  We can read the hash above and see
+what needs to change (and change it directly), but the task is to think of a
+programmatic solution.
+
+For Romeo, we see that the `epic_tragedy` hash contains a `:montague` key
+pointing to a nested hash. We can start by accessing this nested hash:
+
+```rb
+epic_tragedy[:montague]
+ # => {
+ #      :patriarch => {name: "Lord Montague", age: "53"},
+ #      :matriarch => {name: "Lady Montague", age: "54"},
+ #      :hero => {name: "Romeo", age: "15", status: "alive"},
+ #      :hero_friends => [
+ #        {name: "Benvolio", age: "17", attitude: "worried"},
+ #        {name: "Mercutio", age: "18", attitude: "hot-headed"}
+ #      ]
+ #    }
+```
+
+This hash contains a `:hero` key, which points to
+another hash. We can chain brackets and add this key to previous code:
+
+```rb
+epic_tragedy[:montague][:hero]
+ # => {name: "Romeo", age: "15", status: "alive"}
+```
+
+It is in _this_ hash that the `:status` key is present. We'll chain another
+bracket, this time for `:status`:
+
+```rb
+epic_tragedy[:montague][:hero][:status]
+ # => "alive"
+```
+
+Now that we can access `:status`, we can modify it by assigning it a different
+value, in our case, `"dead"`.
+
+```rb
+epic_tragedy[:montague][:hero][:status] = "dead"
+ # => "dead"
+```
+
+For Juliet, we follow the same process using the `:capulet` and `:heroine` keys
+instead.
+
+### `add_characters`
+
+For the second method, we are again given an `epic_tragedy` hash (don't worry
+that Romeo and Juliet are still alive, we're not testing for that). This time,
+we need to add an `:additional_characters` key to the hash. This key should
+point to an array of two hashes, each with a `:name` key. The first name will be
+`"Prince Escalus"`, and the second will be `"Apothecary"`.
+
+Similar to changing a value in a hash, we can add a key/value pair by providing
+both the key we want to add and the value it should point to. If the key doesn't
+exist, it will be created.
+
+We can first add the key and assign it to an empty array:
+
+```rb
+epic_tragedy[:additional_characters] = []
+ # => []
+```
+
+The next step would be to add the two hashes. We might do this with variables:
+
+```rb
+prince = { name: "Prince Escalus" }
+apothecary = { name: "Apothecary" }
+```
+
+And then push these into the array:
+
+```rb
+epic_tragedy[:additional_characters] << prince
+epic_tragedy[:additional_characters] << apothecary
+```
+
+But we can skip over the variables entirely and go straight to pushing the
+hashes when they're created:
+
+```rb
+epic_tragedy[:additional_characters] << { name: "Prince Escalus" }
+epic_tragedy[:additional_characters] << { name: "Apothecary" }
+```
+
+Or we could assign these hashes using chained brackets:
+
+```rb
+epic_tragedy[:additional_characters][0] = { name: "Prince Escalus" }
+epic_tragedy[:additional_characters][1] = { name: "Apothecary" }
+```
+
+Any of these options will work. It is also perfectly valid to compose the
+creation of both hashes when creating the array they are in:
+
+```rb
+epic_tragedy[:additional_characters] = [
+  { name: "Prince Escalus" },
+  { name: "Apothecary" }
+]
+ # => [{:name=>"Prince Escalus"}, {:name=>"Apothecary"}]
+```
+
+The expression above will handle everything needed for the `add_characters`
+method.
