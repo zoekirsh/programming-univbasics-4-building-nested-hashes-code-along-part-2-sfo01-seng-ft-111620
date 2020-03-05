@@ -40,9 +40,4 @@ describe "add_characters" do
       expect(add_characters[:additional_characters][1][:name]).to eq("Apothecary")
     end
   end
-	
-
-  
-
-  it "retur"
 end
